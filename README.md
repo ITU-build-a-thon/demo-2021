@@ -1,5 +1,5 @@
 # demo-2021
-Integrated code of ITU Buildathon 2021 activities. 
+Integrated code of ITU Buildathon 2021 activities. This was a problem statement of [ITU AI/ML Challenge 2021](https://aiforgood.itu.int/about/aiml-in-5g-challenge/) sponsered by ITU FG on Autonomous networks
 
 This repo consists code submitted by following teams
 
