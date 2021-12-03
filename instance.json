@@ -1,0 +1,7 @@
+{
+        "source" : "time.series.data",
+        "modelname":"prb_pred_model.pkl",
+        "modelversion":"1.0.0",
+        "modelserver": "http://10.20.6.9:10001",
+        "sink": "alloc"
+}

@@ -1,0 +1,84 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+    - name: set model name in xapp-descriptor of model xapp
+      shell: contents="$(jq '.pipeline.modelname = "{{name}}"' $ORCH_PATH/lower-loop/ric-app-prbpred/prbpred/xapp-descriptor/config.json)" && echo "${contents}" > $ORCH_PATH/lower-loop/ric-app-prbpred/prbpred/xapp-descriptor/config.json
+
+    - name: set model server in xapp-descriptor of model xapp
+      shell: contents="$(jq '.pipeline.modelversion = "{{version}}"' $ORCH_PATH/lower-loop/ric-app-prbpred/prbpred/xapp-descriptor/config.json)" && echo "${contents}" > $ORCH_PATH/lower-loop/ric-app-prbpred/prbpred/xapp-descriptor/config.json
+
+    - name: set model version in xapp-descriptor of model xapp
+      shell: contents="$(jq '.pipeline.modelserver = "{{server}}"' $ORCH_PATH/lower-loop/ric-app-prbpred/prbpred/xapp-descriptor/config.json)" && echo "${contents}" > $ORCH_PATH/lower-loop/ric-app-prbpred/prbpred/xapp-descriptor/config.json
+
+    - name: onboard model xapp
+      shell: dms_cli onboard --config_file_path $ORCH_PATH/lower-loop/ric-app-prbpred/prbpred/xapp-descriptor/config.json --shcema_file_path=$ORCH_PATH/lower-loop/embedded-schema.json
+    
+    - name: install model xapp
+      shell: dms_cli install --xapp_chart_name=prbpredxapp --version=0.0.2 --namespace=ricxapp
+
+    # - name: dummy
+    #   command: echo ../../lower-loop/ric-app-prbpred/prbpred/xapp-descriptor/config.json
+
+
+
+
+
+
+#   - name: Download h5 model through REST API and save.
+#     get_url:
+#       url: "{{link_for_download_2}}"
+#       dest: /home/blessed/Downloads/Intent-Driven-Closed-Loops--main/basic_three_node/files/model.h5
+#       mode: '0777'
+# #only the structure of model node, only the attributes of the node
+#   - shell: cat /home/blessed/Downloads/Intent-Driven-Closed-Loops--main/basic_three_node/service.yaml
+#     register: result
+
+#   - set_fact:
+#       myvar: "{{ result.stdout | from_yaml | to_json }}"
+
+#   - copy:
+#       content: "{{ myvar }}"
+#       dest:   /home/blessed/Downloads/Intent-Driven-Closed-Loops--main/basic_three_node/playbooks/service.json
+
+#   - name: Create Dockerfile
+#     copy:
+#       dest: /home/blessed/Downloads/Intent-Driven-Closed-Loops--main/basic_three_node/playbooks/Dockerfile
+#       content: > 
+#         #Image for source node
+
+#         FROM ubuntu 
+        
+#         # MAINTAINER gudablessed@gmail.com 
+
+#         RUN apt-get update 
+
+#         RUN apt-get install -y curl
+
+#         RUN curl  {{link_for_download_2}}
+
+    
+
+
+#   - name: build container image
+#     docker_image:
+#       name: modelcontainer:v1.0
+#       source: build
+#       build:
+#         path: /home/blessed/Downloads/Intent-Driven-Closed-Loops--main/basic_three_node/playbooks/
+#       state: present
+
+
+#   - name: archive container image as a tarball
+#     docker_image:
+#       name: modelcontainer:v1.0
+#       archive_path: /home/blessed/Downloads/Intent-Driven-Closed-Loops--main/basic_three_node/playbooks/modelcontainer_v1_0.tar
+#       source: pull
+#       state: present
+
+#   - name: load container from tarball
+#     docker_image:
+#       name: modelcontainer:v1.0
+#       load_path: /home/blessed/Downloads/Intent-Driven-Closed-Loops--main/basic_three_node/playbooks/modelcontainer_v1_0.tar
+#       state: present
+#       source: load

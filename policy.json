@@ -1,0 +1,27 @@
+{
+  "name": "tsapolicy",
+  "description": "tsa parameters",
+  "policy_type_id": 20008,
+  "create_schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "source": {
+        "type": "string"
+      },
+      "modelname":{
+        "type": "string"
+      },
+      "modelversion":{
+        "type": "string"
+      },
+      "modelserver":{
+        "type": "string"
+      },
+      "sink":{
+        "type": "string"
+      }
+    },
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,120 @@
+---
+tosca_definitions_version: tosca_simple_yaml_1_3
+
+node_types:
+  sourceNode:
+    derived_from: tosca.nodes.SoftwareComponent
+    attributes:
+      source_uri_attribute:
+        description: Rest API to fetch data 
+        type: string
+        default: "null"         
+    interfaces:
+      Standard:
+        operations:
+          create:
+            implementation: playbooks/source.yaml
+            inputs:
+              uri:
+                type: string
+                default: {get_attribute: [SELF, source_uri_attribute]}
+
+
+  sinkNode:
+    derived_from: tosca.nodes.SoftwareComponent
+    attributes:
+      sink_uri_attribute:
+        description: Rest API to post settings
+        type: string
+        default: "null"
+    interfaces:
+      Standard:
+        operations:
+          create:
+            implementation: playbooks/sink.yaml
+            inputs:
+              uri:
+                type: string
+                default: {get_attribute: [SELF, sink_uri_attribute]}
+
+  modelNode:
+    derived_from: tosca.nodes.SoftwareComponent
+    attributes:
+      model_name_attribute:
+        description: Name of ML model
+        type: string
+        default: "null"  
+      model_server_attribute:
+        description: URL for ML model server
+        type: string
+        default: "null"
+      model_version_attribute:
+        description: Version of ML model
+        type: string
+        default: "null"
+      catalogid:
+        description: catalog ID
+        type: string
+        default: "0"
+      revisionid:
+        description: revision ID
+        type: string
+        default: "0"
+      solutionid:
+        description: solution ID
+        type: string
+        default: "0"
+    interfaces:
+      Standard:
+        operations:
+          create:
+            implementation: playbooks/model.yaml
+            inputs:
+              name:
+                type: string
+                default: {get_attribute: [SELF, model_name_attribute]}
+              version:
+                type: string
+                default: {get_attribute: [SELF, model_version_attribute]}
+              server:
+                type: string
+                default: {get_attribute: [SELF, model_server_attribute]}
+ 
+  
+
+topology_template:
+  node_templates:
+    source_node:
+      type: sourceNode
+
+    model_node:
+      type: modelNode
+      requirements:
+        - dependency: source_node
+        - host: workstation
+      
+    workstation:
+      type: tosca.nodes.Compute
+      attributes:
+        public_address: localhost
+        private_address: localhost
+              
+    sink_node:
+      type: sinkNode
+      requirements:
+        - dependency: model_node
+   
+
+  outputs:
+    output_solution_id:
+      description: Solution ID
+      value: { get_attribute: [ model_node, solutionid ] }
+    
+    output_catalog_id:
+      description: Catalog ID
+      value: { get_attribute: [ model_node, catalogid] }
+
+    output_revision_id:
+      description: Revision ID
+      value: { get_attribute: [ model_node, revisionid ] }
+
