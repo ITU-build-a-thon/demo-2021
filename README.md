@@ -15,3 +15,13 @@ Integration done with help of Highstreet Technologies GmbH
 Follow *oran-README.md* to setup oran-sc near-rt-ric.
 
 Then follow *integration-README.md* to setup intent based xapp orchestration.
+
+# Overview
+
+*a1poller* polls A1 mediator for new A1 policy
+
+*cl-orch* orchestrates xapps based on the A1 policy
+
+*lower-loop* contains code for xapps and model repo
+
+![Overview](overview.png  "Overview")

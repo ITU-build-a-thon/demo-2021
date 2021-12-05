@@ -44,7 +44,7 @@ This doc assumes that o-ran-sc Near RT RIC (Dawn release) is running on Ubuntu 1
 
 
 ### IP check
-Check if A1 mediator IP is set correctly in *a1listner.py* and *undeploy.sh*. Replace this IP:Port in all A1 curl requests in rest of this document.
+Check if A1 mediator IP is set correctly in *a1poller.py* and *undeploy.sh*. Replace this IP:Port in all A1 curl requests in rest of this document.
 
 `kubectl get svc -n ricplt | grep a1mediator-http | awk '{ print $3 }{ print $5 }'`
 
@@ -86,11 +86,11 @@ Run all commands as root
 
         python3 -m opera.api.cli
 
-2. In term 2 start a1listner
+2. In term 2 start a1poller
 
          cd xopera-api/src/near-rt-ric
 
-         python3 a1toyaml.py
+         python3 a1poller.py
 
 3. In term 3 start model server
  
@@ -126,7 +126,7 @@ To debug orchestration
 
 ## Pitfalls
 
-dms_cli only runs if python3.6/3.7 is default python3(with warnings). Not if python3.8 is default python3. Python versions required by xopera and dms_cli may conflict with each other.
+dms_cli only runs if python3.6/3.7 is default python3(with warnings). Python versions required by xopera and dms_cli may conflict with each other.
 
-xopera generates .opera and .opera-cli directories which might contain cache. 
+In case of orchestration errors, delete .opera and .opera-cli directories. 
 
