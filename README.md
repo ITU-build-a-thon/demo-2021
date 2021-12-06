@@ -18,10 +18,12 @@ Then follow *integration-README.md* to setup intent based xapp orchestration.
 
 # Overview
 
+![Overview](overview.png  "Overview")
+
+## Code structure
+
 *a1poller* polls A1 mediator for new A1 policy
 
-*cl-orch* orchestrates xapps based on the A1 policy
+*cl-orch* contains YAML templates to orchestrate xapps based on the A1 policy
 
 *lower-loop* contains code for xapps and model repo
-
-![Overview](overview.png  "Overview")
