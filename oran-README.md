@@ -1,5 +1,5 @@
 # Steps for installing oran-sc near RT RIC 
-
+This instractions are for installing Dawn realease on Ubuntu 18.04 machine.
 ## Get helm(v3)
 ```
 sudo -i
