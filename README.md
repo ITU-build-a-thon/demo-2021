@@ -10,6 +10,7 @@ Team RAN-RIC-xApp: https://github.com/deenammd/ITUML5GChallenge_BuildaThon
 Team WINEST: https://github.com/gblessed/Intent-Driven-Closed-Loops- 
 
 Team-Conquerors: https://github.com/AdityaVMVS/Team-Conquerors
+
 Integration done with help of Highstreet Technologies GmbH
 
 # Installation
